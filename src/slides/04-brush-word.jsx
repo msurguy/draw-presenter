@@ -22,7 +22,7 @@ export default function Slide() {
             font="EMSLeague"
             size={210}
             align="center"
-            brush={{ name: "marker", color: "#ff3300", weight: 0.42 }}
+            brush={{ name: "crayon", color: "#ff3300", weight: 0.1 }}
             duration={3.4}
             jitter={0.4}
             order={0}
@@ -50,8 +50,8 @@ export default function Slide() {
           </div>
         </Appear>
 
-        {/* Next keypress: a pen word slams in, stroke by stroke. */}
-        <BrushReveal type="underline" brush={{ name: "marker", color: "#ffcc33", weight: 1.6 }} duration={1} order={3} as="div">
+        {/* Next keypress: a pen word slams in, stroke by stroke, then gets underlined. */}
+        <BrushReveal type="underline" brush={{ name: "marker", color: "#ffcc33", weight: 1.6 }} duration={1} step={1} order={1} as="div">
           <BrushText
             font="EMSCasualHand"
             size={87}
