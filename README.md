@@ -6,6 +6,10 @@ themselves letter by letter, real brush strokes painted over live text,
 diagrams that draw in block by block, WGSL shader transitions, and a visual
 editor that writes plain React files you can keep hand-editing.
 
+**[▶ Live demo](https://msurguy.github.io/draw-presenter/)** — the bundled
+demo deck, built from `main` by GitHub Actions. Use → / ← or Space to step
+through it; best in a WebGPU browser.
+
 <p align="center">
   <img src="docs/screenshots/01-title.jpg" width="49%" alt="Title slide, single-stroke type on paper" />
   <img src="docs/screenshots/06-brush-notes.jpg" width="49%" alt="Brush annotations over live text" />
@@ -51,6 +55,7 @@ npm install
 npm run dev        # deck at http://localhost:5173, admin at #/admin
 npm run build      # static build in dist/ (view-only: no admin/editor)
 npm run preview
+BASE_PATH=/my-repo/ npm run build   # build for hosting under a sub-path (GitHub Pages)
 npm run check:shaders   # validate every WGSL shader offline
 npm run art             # regenerate the algorithmic line art in public/assets/images
 ```

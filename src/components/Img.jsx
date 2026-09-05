@@ -1,4 +1,5 @@
 import React from "react";
+import { publicUrl } from "../deck/publicUrl.js";
 
 // Positioned image for the 1920×1080 stage. Give it x/y/width (stage pixels)
 // or position it yourself via `style`. Wrap in <Appear> to animate it in.
@@ -7,7 +8,7 @@ export default function Img({ src, alt = "", x, y, width, height, className, sty
   return (
     <img
       {...rest}
-      src={src}
+      src={publicUrl(src)}
       alt={alt}
       draggable={false}
       className={className}

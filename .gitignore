@@ -1,7 +1,14 @@
 node_modules
-dist
+# Only the app's own build output. vendor/brushmark/dist is the hand-patched
+# library build this project imports (see vendor/brushmark/VENDOR-NOTES.md)
+# and must stay tracked so fresh clones and CI can build.
+/dist
 .DS_Store
 src/slides/_trash
 vendor/brushmark/node_modules
 vendor/brushmark/vendor/p5.brush/node_modules
 .claude/settings.local.json
+
+# Local social promo: Remotion source, captures, dependencies, and renders
+/promo-remotion/
+/promo-output/

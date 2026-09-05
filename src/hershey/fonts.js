@@ -1,3 +1,5 @@
+import { publicUrl } from "../deck/publicUrl.js";
+
 // Single-line (stroke) font registry. Fonts are SVG 1.1 fonts bundled in
 // public/fonts/single-line/ (licenses: see THIRD_PARTY_NOTICES.md). Each
 // glyph's `d` is an open, unfilled polyline — one `M …` subpath per pen
@@ -95,7 +97,7 @@ export function fontFileUrl(name) {
   const file = FONTS[name];
   if (!file) {
     console.warn(`[hershey] unknown font "${name}" — using ${DEFAULT_FONT}.`);
-    return `/fonts/single-line/${FONTS[DEFAULT_FONT]}`;
+    return publicUrl(`/fonts/single-line/${FONTS[DEFAULT_FONT]}`);
   }
-  return `/fonts/single-line/${file}`;
+  return publicUrl(`/fonts/single-line/${file}`);
 }

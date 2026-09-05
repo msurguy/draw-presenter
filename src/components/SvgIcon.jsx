@@ -1,5 +1,6 @@
 import React, { useLayoutEffect, useRef, useState } from "react";
 import { useSlide } from "../deck/SlideContext.jsx";
+import { publicUrl } from "../deck/publicUrl.js";
 
 // Inlines an external SVG so its strokes can be animated. With `draw`, every
 // stroked shape animates on with a dashoffset tween (like HersheyText).
@@ -15,7 +16,7 @@ function fetchSvg(src) {
   if (!svgCache.has(src)) {
     svgCache.set(
       src,
-      fetch(src).then((r) => {
+      fetch(publicUrl(src)).then((r) => {
         if (!r.ok) throw new Error(`SVG fetch failed: ${r.status}`);
         return r.text();
       }),

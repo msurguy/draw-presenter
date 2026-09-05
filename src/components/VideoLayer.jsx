@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useSlide } from "../deck/SlideContext.jsx";
+import { publicUrl } from "../deck/publicUrl.js";
 
 // Muted, autoplaying, looping video. Plays only while its slide is active.
 // When the slide becomes outgoing during a transition it just pauses, freezing
@@ -37,8 +38,8 @@ export default function VideoLayer({
     <video
       {...rest}
       ref={ref}
-      src={src}
-      poster={poster}
+      src={publicUrl(src)}
+      poster={publicUrl(poster)}
       muted
       loop={loop}
       playsInline

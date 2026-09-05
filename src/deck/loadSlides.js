@@ -1,4 +1,5 @@
 import manifest from "../slides/manifest.json";
+import { publicUrl } from "./publicUrl.js";
 
 // Every .jsx file in src/slides/ is a slide. The manifest controls order; any
 // slide on disk that is missing from the manifest still shows up (appended at
@@ -25,7 +26,7 @@ export function normalizeSlideModule(id, mod, file = id) {
       transition: { ...DEFAULT_TRANSITION, ...(meta.transition || {}) },
       assets: meta.assets || [],
     },
-    assets: Object.fromEntries((meta.assets || []).map((a) => [a.key, a.path])),
+    assets: Object.fromEntries((meta.assets || []).map((a) => [a.key, publicUrl(a.path)])),
     Component: mod.default,
   };
   if (!mod.default) {
