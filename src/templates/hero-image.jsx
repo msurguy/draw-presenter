@@ -13,7 +13,7 @@ export const meta = {
   id: "hero-image",
   title: "Hero image",
   transition: { kind: "fade", duration: 0.8 },
-  assets: [{ key: "hero", path: "/assets/images/plotter.svg", type: "image" }],
+  assets: [{ key: "hero", path: "/assets/images/delaunay-wide.svg", type: "image" }],
 };
 
 export default function Slide({ assets }) {

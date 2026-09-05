@@ -24,7 +24,10 @@ import { useSlide } from "../deck/SlideContext.jsx";
 //
 // The annotation's own timeline stays standalone; the slide timeline scrubs
 // its progress through a proxy tween, so slide-timeline rebuilds never kill
-// the brush art.
+// the brush art. The proxy is a property SETTER (not an onUpdate callback):
+// when the deck jumps the timeline past this entrance — a keypress landing
+// mid-stroke, an editor scrub — GSAP still writes the final value even though
+// callbacks are suppressed, so the paint always lands fully drawn.
 export default function BrushReveal({
   type = "underline",
   brush = { name: "marker", color: "#ffcc33" },
@@ -114,14 +117,13 @@ export default function BrushReveal({
         targets: () => [el],
         from: dim ? { opacity: dimOpacity } : null, // pre-set before first paint
         custom: (tl, targets, at) => {
-          const proxy = { p: 0 };
-          tl.to(
-            proxy,
+          tl.fromTo(
+            progressProxy(annotation),
+            { p: 0 },
             {
               p: 1,
               duration,
               ease: "none", // brushmark applies its own easing internally
-              onUpdate: () => annotation.timeline.progress(proxy.p),
             },
             at,
           );
@@ -145,14 +147,13 @@ export default function BrushReveal({
           delay,
           targets: () => [el],
           custom: (tl, targets, at) => {
-            const proxy = { p: 1 };
-            tl.to(
-              proxy,
+            tl.fromTo(
+              progressProxy(annotation),
+              { p: 1 },
               {
                 p: 0,
                 duration: duration * 0.6,
                 ease: "none",
-                onUpdate: () => annotation.timeline.progress(proxy.p),
               },
               at,
             );
@@ -178,4 +179,18 @@ export default function BrushReveal({
       {children}
     </Tag>
   );
+}
+
+// Tween target whose `p` setter scrubs the brushmark timeline directly.
+function progressProxy(annotation) {
+  let value = annotation.timeline.progress();
+  return {
+    get p() {
+      return value;
+    },
+    set p(v) {
+      value = v;
+      annotation.timeline.progress(v);
+    },
+  };
 }

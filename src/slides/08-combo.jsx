@@ -11,9 +11,9 @@ export const meta = {
   title: "Mix every medium",
   transition: { kind: "iris-shader", duration: 1, params: { color: "#ffcc33" } },
   assets: [
-    { key: "plotter", path: "/assets/images/plotter.svg", type: "image" },
-    { key: "waves", path: "/assets/images/waves.svg", type: "image" },
-    { key: "spiral", path: "/assets/images/spiral.svg", type: "image" },
+    { key: "hilbert", path: "/assets/images/hilbert.svg", type: "image" },
+    { key: "truchet", path: "/assets/images/truchet.svg", type: "image" },
+    { key: "superformula", path: "/assets/images/superformula.svg", type: "image" },
     { key: "inset", path: "/assets/video/gold-loop.mp4", type: "video" },
   ],
 };
@@ -27,14 +27,14 @@ export default function Slide({ assets }) {
         </HersheyText>
       </div>
 
-      {/* Row of line-art images, staggered in. */}
+      {/* Row of generated line art (npm run art), staggered in. */}
       <Appear effect="fade-up" order={1} delay={0.4} stagger={0.15} style={{ position: "absolute", top: 290, left: 120, display: "flex", gap: 60, alignItems: "flex-start" }}>
-        <Img src={assets.plotter} width={420} />
-        <Img src={assets.waves} width={420} />
-        <Img src={assets.spiral} width={280} />
+        <Img src={assets.hilbert} width={360} />
+        <Img src={assets.truchet} width={360} />
+        <Img src={assets.superformula} width={360} />
       </Appear>
 
-      <div style={{ position: "absolute", left: 1400, top: 300 }}>
+      <div style={{ position: "absolute", left: 1400, top: 330 }}>
         <BrushText font="HersheyScript1" size={150} align="left" brush={{ name: "marker", color: "#ffcc33", weight: 0.5 }} duration={2} order={2} delay={0.6}>
           Painted
         </BrushText>

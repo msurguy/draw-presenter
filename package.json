@@ -28,7 +28,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "check:shaders": "node scripts/check-shaders.mjs"
+    "check:shaders": "node scripts/check-shaders.mjs",
+    "art": "node scripts/generate-art.mjs"
   },
   "dependencies": {
     "@vgpu/wgsl": "^0.3.1",
@@ -50,6 +51,7 @@
     "@babel/parser": "^7.29.8",
     "@types/three": "^0.180.0",
     "@vitejs/plugin-react": "^6.1.1",
+    "d3-delaunay": "^6.0.4",
     "magic-string": "^0.30.21",
     "typescript": "^7.0.2",
     "vite": "^8.2.2"

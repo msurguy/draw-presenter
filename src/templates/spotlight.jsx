@@ -15,9 +15,9 @@ export const meta = {
   background: "#202020",
   transition: { kind: "fade", duration: 0.8 },
   assets: [
-    { key: "img1", path: "/assets/images/plotter.svg", type: "image" },
-    { key: "img2", path: "/assets/images/waves.svg", type: "image" },
-    { key: "img3", path: "/assets/images/spiral.svg", type: "image" },
+    { key: "img1", path: "/assets/images/concentric.svg", type: "image" },
+    { key: "img2", path: "/assets/images/delaunay.svg", type: "image" },
+    { key: "img3", path: "/assets/images/ray-hatching.svg", type: "image" },
   ],
 };
 
@@ -38,17 +38,17 @@ export default function Slide({ assets }) {
       <div style={{ position: "absolute", left: 120, right: 120, top: 400, display: "flex", gap: 90, alignItems: "center", justifyContent: "center" }}>
         <BrushReveal type="circle" brush={{ name: "marker", color: "#ffcc33", weight: 1.6 }} options={{ iterations: 2, padding: 24 }} duration={1.1} step={1} dim as="div">
           <Img src={assets.img1} width={430} />
-          <div style={{ textAlign: "center", marginTop: 16, fontSize: 24, color: "var(--ink-dim)" }}>the machine</div>
+          <div style={{ textAlign: "center", marginTop: 16, fontSize: 24, color: "var(--ink-dim)" }}>concentric infill</div>
         </BrushReveal>
 
         <BrushReveal type="contour" brush={{ name: "2B", color: "#c93030", weight: 1.5 }} options={{ contour: { inflate: 20, roundness: 0.9 } }} duration={1.2} step={2} dim as="div">
           <Img src={assets.img2} width={430} />
-          <div style={{ textAlign: "center", marginTop: 16, fontSize: 24, color: "var(--ink-dim)" }}>the lines</div>
+          <div style={{ textAlign: "center", marginTop: 16, fontSize: 24, color: "var(--ink-dim)" }}>delaunay mesh</div>
         </BrushReveal>
 
         <BrushReveal type="box" brush={{ name: "charcoal", color: "#8fb6e8", weight: 1.4 }} options={{ padding: 20 }} duration={1} step={3} dim as="div">
-          <Img src={assets.img3} width={300} />
-          <div style={{ textAlign: "center", marginTop: 16, fontSize: 24, color: "var(--ink-dim)" }}>the result</div>
+          <Img src={assets.img3} width={330} />
+          <div style={{ textAlign: "center", marginTop: 16, fontSize: 24, color: "var(--ink-dim)" }}>ray hatching</div>
         </BrushReveal>
       </div>
     </div>

@@ -14,9 +14,9 @@ export const meta = {
   title: "Title + images",
   transition: { kind: "fade", duration: 0.8 },
   assets: [
-    { key: "img1", path: "/assets/images/plotter.svg", type: "image" },
-    { key: "img2", path: "/assets/images/waves.svg", type: "image" },
-    { key: "img3", path: "/assets/images/spiral.svg", type: "image" },
+    { key: "img1", path: "/assets/images/hilbert.svg", type: "image" },
+    { key: "img2", path: "/assets/images/truchet.svg", type: "image" },
+    { key: "img3", path: "/assets/images/superformula.svg", type: "image" },
   ],
 };
 
