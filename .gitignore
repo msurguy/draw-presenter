@@ -1,0 +1,7 @@
+node_modules
+dist
+.DS_Store
+src/slides/_trash
+vendor/brushmark/node_modules
+vendor/brushmark/vendor/p5.brush/node_modules
+.claude/settings.local.json

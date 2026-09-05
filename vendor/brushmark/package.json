@@ -1,0 +1,82 @@
+{
+  "name": "brushmark",
+  "version": "0.1.1",
+  "description": "Animated painterly brush-stroke annotations for text on the web. p5.brush rendering, rough-notation ergonomics, GSAP timing.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/msurguy/brushmark.git"
+  },
+  "homepage": "https://github.com/msurguy/brushmark#readme",
+  "bugs": "https://github.com/msurguy/brushmark/issues",
+  "author": "Maks Surguy <msurguy@gmail.com>",
+  "type": "module",
+  "main": "./dist/brushmark.js",
+  "module": "./dist/brushmark.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/brushmark.js"
+    },
+    "./react": {
+      "types": "./dist/react/index.d.ts",
+      "import": "./dist/react.js"
+    },
+    "./gsap": {
+      "types": "./dist/animation/gsap.d.ts",
+      "import": "./dist/gsap.js"
+    },
+    "./anime": {
+      "types": "./dist/animation/anime.d.ts",
+      "import": "./dist/anime.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src",
+    "vendor"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:lib": "vite build --mode lib",
+    "typecheck": "tsc --noEmit",
+    "test:p5brush": "vitest run --config vendor/p5.brush/vitest.config.js",
+    "capture": "node scripts/capture.mjs",
+    "prepublishOnly": "npm run typecheck && npm run test:p5brush && npm run build:lib",
+    "postversion": "git push --follow-tags"
+  },
+  "peerDependencies": {
+    "animejs": ">=4",
+    "gsap": ">=3.12",
+    "react": ">=18"
+  },
+  "peerDependenciesMeta": {
+    "animejs": {
+      "optional": true
+    },
+    "gsap": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "animejs": "^4.5.0",
+    "gsap": "^3.12.5",
+    "playwright": "^1.61.1",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "simplex-noise": "^4.0.3",
+    "typescript": "^5.6.0",
+    "vite": "^6.0.0",
+    "vite-plugin-dts": "^4.3.0",
+    "vitest": "^4.1.10"
+  },
+  "license": "MIT"
+}

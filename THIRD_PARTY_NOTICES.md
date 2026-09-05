@@ -1,0 +1,47 @@
+# Third-party notices
+
+draw-presenter itself is MIT licensed (see `LICENSE`). It bundles or depends
+on the following third-party work.
+
+## Vendored libraries
+
+| Component | Where | License |
+|---|---|---|
+| **brushmark** (Maks Surguy) — brush-stroke annotations | `vendor/brushmark/` | MIT. Vendored with three local patches documented in `vendor/brushmark/VENDOR-NOTES.md`. |
+| **p5.brush** (© 2023–2026 Alejandro Campos Uribe) — the pigment renderer brushmark builds on | `vendor/brushmark/vendor/p5.brush/` | MIT (`LICENSE.md` in that folder) |
+
+## Shader snippets (`src/shaders/lib/`)
+
+| Snippet | Origin | License |
+|---|---|---|
+| `snoise2`, `snoise3` (simplex noise, `simplex.js`) | Ian McEwan, Ashima Arts; Stefan Gustavson — [webgl-noise](https://github.com/ashima/webgl-noise), ported to WGSL | MIT (© 2011 Ashima Arts) |
+| `random2`, `random22` (`hash.js`) | David Hoskins, ["Hash without Sine"](https://www.shadertoy.com/view/4djSRW) | MIT (© 2014 David Hoskins) |
+| everything else (`math.js`, `draw.js`, `worley.js`, `kaleidoscope.js`, `sdf.js`, `transition.js`) | original | MIT (this project) |
+
+## npm dependencies
+
+| Package | License |
+|---|---|
+| gsap | [GSAP Standard "No Charge" License](https://gsap.com/standard-license/) — free for commercial and non-commercial use since GSAP 3.13. Not an OSI license; read it before redistributing a modified copy. |
+| react, react-dom, three, mermaid, svgpath, vgpu, @vgpu/wgsl, @vgpu/wgsl-std, vite, @vitejs/plugin-react, @babel/parser, magic-string | MIT |
+| typescript, @types/three | Apache-2.0 / MIT |
+
+## Single-line fonts (`public/fonts/single-line/`)
+
+The deck ships 67 SVG single-stroke fonts. They are data files, not code, and
+each family has its own terms:
+
+| Family | Files | License |
+|---|---|---|
+| **EMS** (EMS Allure, EMS Readability, EMS Tech, …) | `EMS/*.svg` | SIL Open Font License 1.1 — `EMS/OFL.txt` |
+| **Shriinivas** (Custom Script, Square Italic / Normal) | `Shriinivas/*.svg` | SIL Open Font License 1.1 — `Shriinivas/OFL.txt` |
+| **Hershey** (Sans, Serif, Script, Gothic, symbol sets) | `Hershey/*.svg` | Derived from the Hershey fonts (Dr. A. V. Hershey, US National Bureau of Standards, 1967), freely usable; the customary request is that "Hershey" stays in the font names. |
+| **Cutlings** (Geometric, Geometric Round, Singularis, Dualis, Pluralis + smoothed EMS/Hershey variants) | `Cutlings/*.svg` | **License to confirm before redistribution.** No license file was bundled with these files; obtain and add the author's terms here, or remove the family from `src/hershey/fonts.js`. |
+| **Relief Single Line** (+ Ornament) | `Relief/*.svg` | **License to confirm before redistribution** (same as above). |
+| **Routed Gothic** | `RoutedGothic.svg` | **License to confirm before redistribution** (the original Routed Gothic is CC0; the single-line SVG conversion's terms should be verified). |
+
+## Demo assets
+
+`public/assets/` contains only small original line-art SVGs and two short
+generated video loops made for this project; they are MIT like the rest of
+the repository.

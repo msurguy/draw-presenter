@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "vgpu": {
+      "type": "stdio",
+      "command": "node",
+      "args": [
+        "node_modules/vgpu/bin/vgpu.js",
+        "mcp",
+        "--project-from-cwd"
+      ],
+      "env": {}
+    }
+  }
+}

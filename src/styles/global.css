@@ -1,0 +1,484 @@
+/* ------------------------------------------------------------------ tokens */
+/* Deck palette — mirrored in src/theme/tokens.js. */
+:root {
+  --bg: #2d2d2d;
+  --bg-darker: #202020;
+  --panel: #1e1e1e;
+  --surface-hover: #363636;
+  --ink-bright: #f0efec;
+  --ink-dim: #cccccb;
+  --line: #c5c5c5;
+  --accent: #ffcc33;
+  --brand: #1c76e1;
+  --brand-2: #8fb6e8;
+  --text: #f3f3f3;
+  --muted: #9ba3ad;
+  --ink-light: #1f2933;
+}
+
+/* ------------------------------------------------------------------- reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background: var(--bg-darker);
+  color: var(--text);
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+video,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* ------------------------------------------------------------------- stage */
+.stage-viewport {
+  position: fixed;
+  inset: 0;
+  background: var(--bg-darker);
+  overflow: hidden;
+}
+
+.stage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1920px;
+  height: 1080px;
+  background: var(--bg);
+  overflow: hidden;
+  transform-origin: 0 0;
+}
+
+.slide-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.slide-layer > .slide-root {
+  position: absolute;
+  inset: 0;
+}
+
+.transition-overlay-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 50;
+}
+
+/* Fatal error card (e.g. slide crashed) */
+.deck-error {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  font-size: 28px;
+  white-space: pre-wrap;
+  padding: 80px;
+  text-align: center;
+}
+
+/* ------------------------------------------------------------------- admin */
+.admin-loading {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  color: var(--muted);
+}
+
+.admin {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-darker);
+  overflow: hidden;
+}
+
+.admin-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 20px;
+  background: var(--panel);
+  border-bottom: 1px solid #000;
+}
+
+.admin-header h1 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.admin-header .hint {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.admin-header a {
+  margin-left: auto;
+  color: var(--brand-2);
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.admin-body {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+.admin-slides {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-content: flex-start;
+}
+
+.slide-card {
+  width: 264px;
+  background: var(--bg);
+  border: 1px solid #1a1a1a;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: grab;
+  user-select: none;
+  transition:
+    outline-color 0.15s,
+    opacity 0.15s;
+  outline: 2px solid transparent;
+}
+
+.slide-card.selected {
+  outline-color: var(--brand);
+}
+
+.slide-card.drag-over {
+  outline-color: var(--accent);
+}
+
+.slide-card.dragging {
+  opacity: 0.4;
+}
+
+/* Live miniature of a slide (SlideThumb) — used by slide cards and the
+   template picker alike. */
+.thumb {
+  width: 264px;
+  height: 148px;
+  background: var(--bg-darker);
+  overflow: hidden;
+  position: relative;
+  pointer-events: none;
+}
+
+.thumb .thumb-stage {
+  width: 1920px;
+  height: 1080px;
+  transform: scale(0.1375);
+  transform-origin: 0 0;
+  position: absolute;
+  background: var(--bg);
+}
+
+.slide-card .caption {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
+.slide-card .caption .num {
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.slide-card .caption .title {
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.slide-card .caption .kind {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.slide-card .caption .edit {
+  color: var(--brand-2);
+  font-size: 11px;
+  text-decoration: none;
+  padding: 1px 6px;
+  border: 1px solid var(--surface-hover);
+  border-radius: 4px;
+}
+
+.slide-card .caption .edit:hover {
+  border-color: var(--brand);
+}
+
+.admin-side {
+  width: 340px;
+  background: var(--panel);
+  border-left: 1px solid #000;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.admin-side h2 {
+  font-size: 14px;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.admin-side .path {
+  font-size: 11px;
+  color: var(--muted);
+  font-family: ui-monospace, monospace;
+  margin-bottom: 16px;
+  word-break: break-all;
+}
+
+.asset-row {
+  border: 1px dashed var(--surface-hover);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+}
+
+.asset-row.drag-over {
+  border-color: var(--accent);
+  background: #333;
+}
+
+.asset-row .asset-head {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.asset-row .asset-head .key {
+  color: var(--brand-2);
+  font-family: ui-monospace, monospace;
+}
+
+.asset-row .asset-head .type {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.asset-row .asset-path {
+  font-size: 11px;
+  color: var(--ink-dim);
+  font-family: ui-monospace, monospace;
+  word-break: break-all;
+}
+
+.asset-row .asset-preview {
+  margin-top: 8px;
+  max-height: 90px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--bg-darker);
+  display: grid;
+  place-items: center;
+}
+
+.asset-row .asset-preview img,
+.asset-row .asset-preview video {
+  max-height: 90px;
+  object-fit: contain;
+}
+
+.asset-row .drop-hint {
+  margin-top: 8px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.admin-side .empty {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.admin-toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--surface-hover);
+  color: var(--text);
+  border-left: 3px solid var(--accent);
+  padding: 10px 16px;
+  font-size: 13px;
+  border-radius: 6px;
+  z-index: 100;
+}
+
+/* ---- "New slide" dialog ---- */
+.admin-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: grid;
+  place-items: center;
+  z-index: 50;
+}
+
+.admin-modal {
+  width: min(1160px, calc(100vw - 48px));
+  max-height: calc(100vh - 48px);
+  display: flex;
+  flex-direction: column;
+  background: var(--panel);
+  border: 1px solid #000;
+  border-radius: 10px;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+}
+
+.admin-modal header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  border-bottom: 1px solid #000;
+}
+
+.admin-modal header h2 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.admin-modal header .hint {
+  flex: 1;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.tpl-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 264px);
+  justify-content: center;
+  gap: 16px;
+  padding: 20px;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.tpl-card {
+  appearance: none;
+  padding: 0;
+  font: inherit;
+  text-align: left;
+  width: 264px;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid #1a1a1a;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  outline: 2px solid transparent;
+  transition: outline-color 0.15s;
+}
+
+.tpl-card:hover {
+  outline-color: var(--surface-hover);
+}
+
+.tpl-card.selected {
+  outline-color: var(--accent);
+}
+
+.tpl-card .caption {
+  display: grid;
+  gap: 2px;
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
+.tpl-card .caption .desc {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.admin-form {
+  padding: 14px 20px 0;
+  border-top: 1px solid #000;
+}
+
+.admin-form .ed-row {
+  grid-template-columns: 84px 1fr;
+}
+
+.admin-form .ed-input {
+  font-size: 13px;
+  padding: 6px 8px;
+}
+
+.admin-form .suffix {
+  color: var(--muted);
+  font-size: 11px;
+  font-family: ui-monospace, monospace;
+}
+
+.admin-form-note {
+  color: var(--muted);
+  font-size: 12px;
+  margin: 2px 0 8px 92px;
+}
+
+.admin-form-note b {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.admin-form-error {
+  color: #ff8a80;
+  font-size: 12px;
+  margin: 0 0 8px 92px;
+}
+
+.admin-modal .actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 10px 20px 16px;
+}

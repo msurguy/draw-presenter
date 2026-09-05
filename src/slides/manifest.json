@@ -1,0 +1,20 @@
+{
+  "order": [
+    "01-title",
+    "02-crossed-out",
+    "03-big-word",
+    "04-brush-word",
+    "05-painted-list",
+    "06-brush-notes",
+    "07-spotlight",
+    "08-combo",
+    "09-fullscreen-video",
+    "10-diagram",
+    "11-anatomy",
+    "12-hero-image",
+    "13-three-scene",
+    "14-section-divider",
+    "15-shader-backdrop",
+    "16-finale"
+  ]
+}
