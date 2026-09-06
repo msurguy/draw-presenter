@@ -7,10 +7,11 @@ import { useEffect, useRef } from "react";
 //   F                      fullscreen
 //   1–9 digits + Enter     jump to slide N (1-based)
 //   A                      admin panel (dev only)
-export function useKeyboard({ next, prev, first, last, jumpTo, fullscreenEl }) {
+// `onInput` (optional) fires on every navigation key so the hint can dismiss.
+export function useKeyboard({ next, prev, first, last, jumpTo, fullscreenEl, onInput }) {
   const bufferRef = useRef("");
   const handlers = useRef({});
-  handlers.current = { next, prev, first, last, jumpTo, fullscreenEl };
+  handlers.current = { next, prev, first, last, jumpTo, fullscreenEl, onInput };
 
   useEffect(() => {
     const onKey = (e) => {
@@ -22,11 +23,13 @@ export function useKeyboard({ next, prev, first, last, jumpTo, fullscreenEl }) {
         case " ":
         case "PageDown":
           e.preventDefault();
+          h.onInput?.();
           h.next();
           break;
         case "ArrowLeft":
         case "PageUp":
           e.preventDefault();
+          h.onInput?.();
           h.prev();
           break;
         case "Home":

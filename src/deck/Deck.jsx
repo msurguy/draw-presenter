@@ -3,10 +3,15 @@ import Stage from "./Stage.jsx";
 import SlideHost from "./SlideHost.jsx";
 import { loadSlides } from "./loadSlides.js";
 import { useKeyboard } from "./useKeyboard.js";
+import { usePointerNav } from "./usePointerNav.js";
+import DeckOverlay from "./DeckOverlay.jsx";
 
 export default function Deck({ initialIndex = 0 }) {
   const slides = useMemo(() => loadSlides(), []);
   const stageRef = useRef(null);
+  const viewportRef = useRef(null);
+  const [inputCount, setInputCount] = useState(0); // navigation gestures seen
+  const noteInput = useCallback(() => setInputCount((n) => n + 1), []);
   const stepApiRef = useRef(null); // filled by the active SlideProvider
   const hostRef = useRef(null); // { finishTransition }
 
@@ -65,8 +70,10 @@ export default function Deck({ initialIndex = 0 }) {
     first: () => go(0, { revealAll: false }),
     last: () => go(slides.length - 1, { revealAll: true }),
     jumpTo: (i) => go(i, { revealAll: false }),
-    fullscreenEl: () => stageRef.current?.closest(".stage-viewport"),
+    fullscreenEl: () => viewportRef.current,
+    onInput: noteInput,
   });
+  usePointerNav(viewportRef, { next, prev, onInput: noteInput });
 
   if (!slides.length) {
     return (
@@ -77,7 +84,11 @@ export default function Deck({ initialIndex = 0 }) {
   }
 
   return (
-    <Stage stageRef={stageRef}>
+    <Stage
+      stageRef={stageRef}
+      viewportRef={viewportRef}
+      overlay={<DeckOverlay inputCount={inputCount} viewportRef={viewportRef} />}
+    >
       <SlideHost
         ref={hostRef}
         slides={slides}

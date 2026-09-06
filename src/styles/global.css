@@ -58,6 +58,116 @@ svg {
   inset: 0;
   background: var(--bg-darker);
   overflow: hidden;
+  /* Mobile: the viewport owns every gesture (tap/swipe nav), no rubber-band
+     scrolling, no browser back-swipe, no long-press callouts. */
+  touch-action: none;
+  overscroll-behavior: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ------------------------------------------------------------ deck overlay */
+.deck-hint {
+  position: fixed;
+  left: 50%;
+  bottom: max(20px, env(safe-area-inset-bottom, 0px) + 12px);
+  transform: translateX(-50%);
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: rgba(20, 20, 20, 0.82);
+  color: var(--ink-dim);
+  font-size: 14px;
+  line-height: 1.3;
+  max-width: calc(100vw - 32px);
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(6px);
+  pointer-events: none;
+  z-index: 50;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+.deck-hint.is-hidden {
+  opacity: 0;
+}
+.deck-hint b {
+  color: var(--ink-bright);
+  font-weight: 600;
+}
+.deck-hint kbd {
+  display: inline-block;
+  min-width: 1.6em;
+  padding: 1px 6px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: var(--ink-bright);
+  font: inherit;
+  font-size: 12px;
+  text-align: center;
+}
+
+.deck-fs-btn {
+  position: fixed;
+  top: max(10px, env(safe-area-inset-top, 0px));
+  right: max(10px, env(safe-area-inset-right, 0px));
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(20, 20, 20, 0.6);
+  color: var(--ink-bright);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 50;
+  opacity: 0.7;
+}
+.deck-fs-btn:active {
+  opacity: 1;
+}
+
+.deck-rotate {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 32px;
+  text-align: center;
+  background: rgba(32, 32, 32, 0.92);
+  color: var(--ink-bright);
+  font-size: 17px;
+  line-height: 1.4;
+  z-index: 40;
+}
+.deck-rotate-icon {
+  color: var(--accent);
+  animation: deck-rotate-hint 2.4s ease-in-out infinite;
+}
+@keyframes deck-rotate-hint {
+  0%,
+  35% {
+    transform: rotate(0deg);
+  }
+  60%,
+  100% {
+    transform: rotate(-90deg);
+  }
+}
+.deck-btn {
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .stage {
