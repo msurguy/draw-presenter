@@ -14,7 +14,7 @@ for (const rel of dirs) {
   for (const f of fs.readdirSync(dir).sort()) {
     if (!f.endsWith(".wgsl.js")) continue;
     const mod = await import(path.join(dir, f));
-    const str = Object.values(mod).find((v) => typeof v === "string" && /@fragment/.test(v));
+    const str = Object.values(mod).find((v) => typeof v === "string" && /@fragment|@compute/.test(v));
     if (str) entries.push({ name: `${rel.replace(/^src\//, "")}/${f}`, wgsl: str });
   }
 }

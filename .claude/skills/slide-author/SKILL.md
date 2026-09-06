@@ -294,6 +294,41 @@ slide is active). `gpu` is the shared vgpu context (may be `null` — always
 handle that with a non-WebGPU fallback). To feed a WGSL shader into a texture,
 see `src/slides/13-three-scene.jsx` (offscreen canvas + `THREE.CanvasTexture`).
 
+### `<ThreeGpuScene>` — Three.js on vgpu's GPUDevice (zero-copy interop)
+
+Same contract as ThreeScene, but the renderer is Three's `WebGPURenderer`
+created on the shared vgpu device, so vgpu and Three.js share one queue:
+a vgpu `compute()` can write straight into a Three.js storage buffer.
+
+```jsx
+import { compute, storage } from "vgpu";
+<ThreeGpuScene background="#050508" camera={{ fov: 38, position: [0, 0.4, 5.2] }}
+  fallback={<p>needs WebGPU</p>}                      // rendered when WebGPU is missing
+  setup={async ({ scene, camera, renderer, gpu, THREE, TSL }) => {
+    const positions = TSL.instancedArray(COUNT, "vec4");   // Three storage attribute
+    /* build a SpriteNodeMaterial reading positions.element(TSL.instanceIndex) … */
+    renderer.render(scene, camera);                         // allocates the GPUBuffer
+    const particles = gpu.device.wrapBuffer(renderer.backend.get(positions.value).buffer);
+    const sim = compute(gpu, simWgsl, { set: { params: {…}, particles } });
+    return { update(t, dt) { sim.set({ params: { time: t, dt } }); sim.dispatch(COUNT / 256); },
+             dispose() { particles.dispose(); } };
+  }} />
+```
+
+`THREE` here is `three/webgpu` and `TSL` is `three/tsl`. Worked example:
+`src/slides/12-gpu-particles.jsx` (1M particles, WGSL curl-noise compute in
+`src/shaders/particles.wgsl.js`, Hershey strokes sampled as attractors).
+
+### `<StepCall>` — run code at a build step
+
+```jsx
+<StepCall step={1} on={(how) => sceneRef.current?.setMode("text", how)} />
+```
+
+`on("play")` fires when the step is reached live; `on("final")` when the step
+is shown statically (arriving via ←, thumbnails, the editor scrubber) — jump
+to the end state without tweens in that case. Renders nothing.
+
 ### `<ShaderLayer>` — fullscreen vgpu/WGSL layer
 
 ```jsx

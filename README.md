@@ -38,6 +38,11 @@ hand-drawn look on purpose — dark paper, thin bright ink, one gold accent.
 - **Mermaid** — hand-drawn flowcharts that reveal one block per keypress.
 - **VideoLayer**, **Img**, **SvgIcon** (draw-on line icons), **ThreeScene**
   (imperative Three.js), **ShaderLayer** (fullscreen WGSL via vgpu).
+- **ThreeGpuScene** — Three.js' WebGPU renderer on vgpu's device: a vgpu
+  compute shader writes straight into a Three.js storage buffer, zero copies.
+  The demo deck moves a million particles this way (curl-noise flow field,
+  then Hershey pen strokes and a torus knot as attractors). **StepCall** runs
+  any code at a build step.
 - **20 transitions** — DOM kinds plus WebGPU overlays (dissolve, sweep, ink,
   burn, iris, ripple, blinds, mosaic, glitch, light-leak, shatter, flow,
   mandala, halftone, hatch). Keynote semantics: ← plays them in reverse.
